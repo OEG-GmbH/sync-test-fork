@@ -1,0 +1,19 @@
+name: upstream-sync
+
+on:
+  schedule:
+    - cron: '41 4 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  sync:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: OEG-GmbH/fork-tools/.github/workflows/upstream-sync.yml@6be35b16474df1b6d3199a2b0033b1f6103a1841
+    with:
+      upstream: OEG-GmbH/sync-test-upstream
+      plugin_paths: |
+        plug
