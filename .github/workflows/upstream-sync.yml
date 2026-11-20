@@ -1,19 +1,27 @@
+# Proposes the newest upstream state as a pull request (never merges, never pushes to main).
+# The work is done by the pinned reusable workflow; see its README for the checks.
 name: upstream-sync
 
 on:
   schedule:
     - cron: '41 4 * * *'
   workflow_dispatch:
+    inputs:
+      base:
+        description: Branch the pull request targets (main, or a test branch with an older state)
+        type: string
+        default: main
 
 permissions: {}
 
 jobs:
   sync:
     permissions:
-      contents: write
+      contents: write        # upstream-sync/* branches only; the sync never writes the base branch
       pull-requests: write
-    uses: OEG-GmbH/fork-tools/.github/workflows/upstream-sync.yml@580ea1ec37946d7ff63036b4c16df296bacd5714
+    uses: OEG-GmbH/fork-tools/.github/workflows/upstream-sync.yml@1680fb1391b06b806e94eae357e296f58581fa2a
     with:
       upstream: OEG-GmbH/sync-test-upstream
+      base: ${{ inputs.base || 'main' }}
       plugin_paths: |
         plug
