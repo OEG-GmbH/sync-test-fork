@@ -1,0 +1,3 @@
+# hook texts of the test plugin
+plug/hooks/**
+**/hooks.json
